@@ -25,21 +25,12 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-#Qcom Default Decryption
+# Qcom TWRP Default Decryption
 import /init.recovery.qcom_decrypt.rc
 
+#on init
+#    setprop prepdecrypt.loglevel 2
+    
 on fs
     wait /dev/block/platform/soc/${ro.boot.bootdevice}
     symlink /dev/block/platform/soc/${ro.boot.bootdevice} /dev/block/bootdevice
-
-service unified-script /system/bin/unified-script.sh
-    user root
-    group root
-    disabled
-    oneshot
-    seclabel u:r:recovery:s0
-
-on boot
-    chmod 0777 /system/bin/unified-script.sh
-    start unified-script 
-    
