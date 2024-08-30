@@ -17,7 +17,7 @@
 FDEVICE="phoenix"
 
 fox_get_target_device() {
-local chkdev=$(echo "$BASH_SOURCE" | grep $FDEVICE)
+	local chkdev=$(echo "$BASH_SOURCE" | grep $FDEVICE)
 	if [ -n "$chkdev" ]; then
 		FOX_BUILD_DEVICE="$FDEVICE"
 	else
@@ -60,7 +60,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export OF_DISABLE_MIUI_OTA_BY_DEFAULT=0
 	export OF_SUPPORT_ALL_BLOCK_OTA_UPDATES=1
 	export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
-	
+
 	# Setings
 	export OF_MAINTAINER="leoxvis(vishwajithkv)"
 
@@ -93,9 +93,9 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 
 	# let's see what are our Build VARs
 	if [ -n "$FOX_BUILD_LOG_FILE" -a -f "$FOX_BUILD_LOG_FILE" ]; then
-		export | grep "FOX" >> $FOX_BUILD_LOG_FILE
-		export | grep "OF_" >> $FOX_BUILD_LOG_FILE
-		export | grep "TARGET_" >> $FOX_BUILD_LOG_FILE
-		export | grep "TW_" >> $FOX_BUILD_LOG_FILE
+		export | grep "FOX" >>$FOX_BUILD_LOG_FILE
+		export | grep "OF_" >>$FOX_BUILD_LOG_FILE
+		export | grep "TARGET_" >>$FOX_BUILD_LOG_FILE
+		export | grep "TW_" >>$FOX_BUILD_LOG_FILE
 	fi
 fi
