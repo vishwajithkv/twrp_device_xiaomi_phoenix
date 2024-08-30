@@ -36,7 +36,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export ALLOW_MISSING_DEPENDENCIES=true
 	export FOX_USE_TWRP_RECOVERY_IMAGE_BUILDER=1
 	export TARGET_DEVICE_ALT="phoenixin"
-	export OF_TARGET_DEVICES="phoenix,phoenixin"
+	export FOX_TARGET_DEVICES="phoenix,phoenixin"
 	export FOX_RECOVERY_SYSTEM_PARTITION="/dev/block/mapper/system"
 	export FOX_RECOVERY_VENDOR_PARTITION="/dev/block/mapper/vendor"
 	export OF_QUICK_BACKUP_LIST="/boot;/data;"
@@ -60,8 +60,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export OF_DISABLE_MIUI_OTA_BY_DEFAULT=0
 	export OF_SUPPORT_ALL_BLOCK_OTA_UPDATES=1
 	export OF_FIX_OTA_UPDATE_MANUAL_FLASH_ERROR=1
-	export OF_OTA_BACKUP_STOCK_BOOT_IMAGE=1
-
+	
 	# Setings
 	export OF_MAINTAINER="leoxvis(vishwajithkv)"
 
@@ -79,7 +78,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export OF_HIDE_NOTCH="1"
 	export FOX_REPLACE_BUSYBOX_PS="0"
 	export FOX_SKIP_ZIP_BINARY="1"
-	export FOX_ADVANCED_SECURITY=1
+	export OF_ADVANCED_SECURITY=1
 
 	# Magisk
 	if [ -n "${FOX_USE_SPECIFIC_MAGISK_ZIP}" ]; then
