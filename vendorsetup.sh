@@ -80,15 +80,36 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export FOX_SKIP_ZIP_BINARY="1"
 	export OF_ADVANCED_SECURITY=1
 
+	# Install Packages required for magisk
+	echo "Installing aria2..."
+	sudo apt install -y aria2
+
 	# Magisk
-	if [ -n "${FOX_USE_SPECIFIC_MAGISK_ZIP}" ]; then
-		if [ ! -e "${FOX_USE_SPECIFIC_MAGISK_ZIP}" ]; then
-			echo "Downloading the Latest Release of Magisk..."
-			LATEST_MAGISK_URL="$(curl -sL https://api.github.com/repos/topjohnwu/Magisk/releases/latest | grep browser_download_url | grep Magisk- | cut -d : -f 2,3 | sed 's/"//g')"
-			aria2c ${LATEST_MAGISK_URL} -o ${FOX_USE_SPECIFIC_MAGISK_ZIP} || wget ${LATEST_MAGISK_URL} -O ${FOX_USE_SPECIFIC_MAGISK_ZIP}
-			[ $? = "0" ] && echo "Magisk Downloaded Successfully"
-			echo "Done!"
+	if [ -z "${MAGISK_ZIP}" ]; then
+		echo "Downloading the Latest Release of Magisk..."
+		LATEST_MAGISK_URL="$(curl -sL https://api.github.com/repos/topjohnwu/Magisk/releases/latest | grep browser_download_url | grep Magisk- | cut -d : -f 2,3 | sed 's/"//g')"
+		FILE_NAME=$(basename "${LATEST_MAGISK_URL}")
+		DOWNLOAD_DIR="/custom/magisk"
+		TEMP_MAGISK_ZIP="${DOWNLOAD_DIR}/${FILE_NAME}"
+
+		aria2c ${LATEST_MAGISK_URL} -o ${TEMP_MAGISK_ZIP} || wget ${LATEST_MAGISK_URL} -O ${TEMP_MAGISK_ZIP}
+
+		if [ $? -eq 0 ]; then
+			# Download successful, set MAGISK_ZIP
+			MAGISK_ZIP="${TEMP_MAGISK_ZIP}"
+		else
+			echo "Failed to download Magisk"
+			exit 1 # Exit with an error code if download fails
 		fi
+	fi
+
+	# Use MAGISK_ZIP if it's set
+	if [ -n "${MAGISK_ZIP}" ]; then
+		export FOX_USE_SPECIFIC_MAGISK_ZIP="${MAGISK_ZIP}"
+		echo "Magisk Downloaded Successfully and path set."
+		echo "Path set to: " ${FOX_USE_SPECIFIC_MAGISK_ZIP}
+	else
+		echo "MAGISK_ZIP is not set; cannot export FOX_USE_SPECIFIC_MAGISK_ZIP."
 	fi
 
 	# let's see what are our Build VARs
