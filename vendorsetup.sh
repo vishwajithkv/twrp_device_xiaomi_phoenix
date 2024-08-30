@@ -65,6 +65,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	export OF_MAINTAINER="leoxvis(vishwajithkv)"
 
 	export FOX_ENABLE_APP_MANAGER=1
+	export FOX_USE_NANO_EDITOR=1
 	export FOX_USE_BASH_SHELL=1
 	export FOX_ASH_IS_BASH=1
 	export FOX_USE_TAR_BINARY=1
